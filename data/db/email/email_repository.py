@@ -2,7 +2,7 @@
 from fastapi import HTTPException, status
 from datetime import datetime
 
-from data.db.email_db import db_find, db_insert_one
+from data.db.email.email_db import db_find, db_insert_one
 from data.db.schemas.subscripter import subscripter_schema
 from data.db.models.subscripter import Subscriptor
 
