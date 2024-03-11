@@ -1,5 +1,5 @@
 ### EMAIL SERVICE ###
-from data.db.email.email_repository import search_subscripters, insert_subscription
+from data.db.subscribes.subscribe_repository import search_subscripters, insert_subscription
 from service.email.models.subscripter import SubscriptorSrv, mapper_data_to_service, mapper_service_to_data
 
 def get_subscriptors():
