@@ -40,8 +40,9 @@ async def insert_new_subscriber(email: str):
 
 """ Activate Suscriptor """
 @router.put('/activated_subscriber/{code}', status_code=status.HTTP_200_OK)
-async def activate_subscriber(code: str):
-    return activate_subscriber(code)
+async def go_to_activate_subscriber(code: str):
+    activate_subscriber(code)
+    return {'message': 'Activated'}
 
 
 """ Cancel Subscription """
