@@ -3,7 +3,7 @@
 import os
 from passlib.context import CryptContext
 
-from secrets import env_var as local
+from env import env_var as local
 
 _dino: str = 'DINO'
 _heroku: str = 'HEROKU'
