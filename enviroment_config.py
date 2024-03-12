@@ -36,6 +36,8 @@ if _heroku == _local:
     # Credentias SMTP for Elastic Email
     ELASTIC_EMAIL_USERNAME: str = os.environ.get('ELASTIC_EMAIL_USERNAME')
     ELASTIC_EMAIL_PASSWORD: str = os.environ.get('ELASTIC_EMAIL_PASSWORD')
+    MAILTRAP_EMAIL_USERNAME: str = os.environ.get('MAILTRAP_EMAIL_USERNAME')
+    MAILTRAP_EMAIL_PASSWORD: str = os.environ.get('MAILTRAP_EMAIL_PASSWORD')
 else:
 
     # Token configuration
@@ -49,3 +51,6 @@ else:
     # Credentias SMTP for Elastic Email
     ELASTIC_EMAIL_USERNAME = local.ELASTIC_EMAIL_USERNAME
     ELASTIC_EMAIL_PASSWORD = local.ELASTIC_EMAIL_PASSWORD
+    MAILTRAP_EMAIL_USERNAME = local.MAILTRAP_EMAIL_USERNAME
+    MAILTRAP_EMAIL_PASSWORD = local.MAILTRAP_EMAIL_PASSWORD
+    
