@@ -10,5 +10,14 @@ def _subscripters() -> MongoClient:
 def db_find():
     return _subscripters.find()
 
+def db_find_one(field: str, key: str):
+    return _subscripters().find_one({field: key})
+
 def db_insert_one(field_dict: dict):
-    return _subscripters().insert_one(field_dict).insert_one
+    return _subscripters().insert_one(field_dict)
+
+def db_find_one_and_replace(filter: Mapping[str, Any], replacement: Mapping[str, Any]):
+    return _subscripters().find_one_and_replace(filter, replacement)
+
+def db_find_one_and_delete(filter: Mapping[str, Any]):
+    return _subscripters().find_one_and_delete(filter)
