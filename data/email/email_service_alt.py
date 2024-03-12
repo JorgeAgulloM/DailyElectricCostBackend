@@ -1,6 +1,6 @@
 import smtplib
 
-from env.env_var import MAILTRAP_EMAIL_USERNAME, MAILTRAP_EMAIL_PASSWORD
+from enviroment_config import MAILTRAP_EMAIL_USERNAME, MAILTRAP_EMAIL_PASSWORD
 
 
 def send_email(receiver: str):
