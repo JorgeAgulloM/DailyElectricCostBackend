@@ -2,19 +2,21 @@
 
 from typing import Optional
 from pydantic import BaseModel
-from data.db.models.subscripter import Subscriptor
+from data.db.models.subscriptor import Subscriber
 
-class SubscriptorSrv(BaseModel):
+class SubscriberSrv(BaseModel):
     id: str = Optional[str] | None
     email: str
+    activation_code: str = Optional[str] | None
     activated: bool = False
     date_activated: str = Optional[str] | None
     cancelated: bool = False
     date_cancelated: str = Optional[str] | None
     
-    
-def mapper_data_to_service(data: Subscriptor) -> SubscriptorSrv:
-    return SubscriptorSrv(data.id, data.email, data.activated, data.date_activated, data.cancelated, data.date_cancelated)    
+def mapper_data_to_service(model: Subscriber) -> SubscriberSrv:
+    subscriptor_srv: SubscriberSrv = model
+    return subscriptor_srv
 
-def mapper_service_to_data(data: SubscriptorSrv) -> Subscriptor:
-    return Subscriptor(data.id, data.email, data.activated, data.date_activated, data.cancelated, data.date_cancelated)
+def mapper_service_to_data(model: SubscriberSrv) -> Subscriber:
+    subscriber: Subscriber = model
+    return subscriber
