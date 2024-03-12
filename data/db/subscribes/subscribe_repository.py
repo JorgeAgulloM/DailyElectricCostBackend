@@ -1,12 +1,14 @@
 ### EMAIL REPOSITORY ###
 from fastapi import HTTPException, status
 from datetime import datetime
+from bson import ObjectId
+from typing import Any, Mapping
 
-from data.db.subscribes.subscribe_db import db_find, db_insert_one
+from data.db.subscribes.subscribe_db import db_find, db_find_one, db_insert_one, db_find_one_and_replace
 from data.db.schemas.subscripter import subscripter_schema
-from data.db.models.subscripter import Subscriptor
+from data.db.models.subscriptor import Subscriber, mapper_model_to_db
 
-def search_subscripters():
+def search_subscribers():
     try:
         subscripters = subscripter_schema(db_find())
         if len(subscripters) == 0:
@@ -16,11 +18,21 @@ def search_subscripters():
     except Exception as e:
         return {'error': f'When getting subscripters! Error: {e}'}
     
-def insert_subscription(subscriptor: Subscriptor):
+
+def search_subscriber(field: str, key: str):
+    return db_find_one(field, key)
+    
+    
+def insert(subscriber: Subscriber):
     try:
-        subscriptor.date_activated = str(datetime.now())
-        
-        result = db_insert_one(subscriptor)
-        return result
+        subscriber_dict = mapper_model_to_db(subscriber)
+        db_insert_one(subscriber_dict)
     except Exception as e:
         return {'error': f'When inserting subscripter! Error: {e}'}
+    
+
+def activate(filter: Mapping[str, Any], replacement: Mapping[str, Any]):
+    try:
+        return db_find_one_and_replace(filter, replacement)
+    except Exception as e:
+        return {'error': f'When activating subscripter! Error: {e}'}      
