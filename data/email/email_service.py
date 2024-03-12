@@ -7,9 +7,12 @@ from enviroment_config import ELASTIC_EMAIL_SERVER, ELASTIC_EMAIL_PORT, ELASTIC_
 from secrets import token_urlsafe
 
 
-def send(recipient: str):
+def send(recipient: str) -> str:
+    # Crea el coódig
+    code = _create_code()
+    
     # Configura la url para la verificación
-    url = _create_url()
+    url = _create_url(code)
 
     # Configura el correo electrónico
     sender = 'agullojorge@gmail.com'
@@ -38,9 +41,9 @@ def send(recipient: str):
     # Cierra la conexión SMTP
     smtp.quit()
 
+    return code
 
-def _create_url() -> str:
-    code = _create_code()
+def _create_url(code: str) -> str:
     url = f"http://127.0.0.1:8000/login/verify_email/{code}\n\n"
     print(url) #Solo para facilitar al activación del usuario.
     return url
