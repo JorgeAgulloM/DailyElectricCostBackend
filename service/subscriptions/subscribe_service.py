@@ -35,7 +35,6 @@ def insert_subscriber(subscriptor: SubscriberSrv):
 def activate_subscriber(code: str):
     try:
         subscriber = search_subscriber('activation_code', code)
-        print(subscriber)
     except Exception as e:
         return {'error': f'When getting user. Error: {e}'}
     
