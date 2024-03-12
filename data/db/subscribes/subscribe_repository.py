@@ -1,7 +1,5 @@
 ### EMAIL REPOSITORY ###
 from fastapi import HTTPException, status
-from datetime import datetime
-from bson import ObjectId
 from typing import Any, Mapping
 
 from data.db.subscribes.subscribe_db import db_find, db_find_one, db_insert_one, db_find_one_and_replace
