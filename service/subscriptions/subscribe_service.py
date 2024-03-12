@@ -34,13 +34,14 @@ def insert_subscriber(subscriptor: SubscriberSrv):
 
 def activate_subscriber(code: str):
     try:
-        subscriber = search_subscriber('code', code)
+        subscriber = search_subscriber('activation_code', code)
+        print(subscriber)
     except Exception as e:
         return {'error': f'When getting user. Error: {e}'}
     
-    subscriber.date_activated = str(datetime.now())
-    subscriber.activated = True
-    filter_id = {'_id': ObjectId(subscriber.id)}
+    subscriber['date_activated'] = str(datetime.now())
+    subscriber['activated'] = True
+    filter_id = {'_id': ObjectId(subscriber['_id'])}
     
     try:
         return activate(filter_id, subscriber)
