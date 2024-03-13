@@ -32,10 +32,7 @@ async def get_subscriber_list():
 """ Insert subscribers """
 @router.post('/{email}', status_code=status.HTTP_201_CREATED)
 async def insert_new_subscriber(email: str):
-    new_subscriber = SubscriberApi(email = email)
-    insert_subscriber(new_subscriber)
-
-    return {'message': 'suscribed'}
+    return insert_subscriber(email)
 
 
 """ Activate Suscriptor """
