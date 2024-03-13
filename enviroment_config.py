@@ -13,6 +13,8 @@ ELASTIC_EMAIL_PORT = 2525
 
 CRYPT = CryptContext(schemes='bcrypt')
 
+print(os.environ)
+
 if _dyno in os.environ:
     ENVIROMENT = _heroku
 else:
