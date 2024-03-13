@@ -3,7 +3,7 @@
 import os
 from passlib.context import CryptContext
 
-_dino: str = 'DINO'
+_dyno: str = 'DYNO'
 _heroku: str = 'HEROKU'
 _local: str = 'LOCAL'
 
@@ -13,7 +13,7 @@ ELASTIC_EMAIL_PORT = 2525
 
 CRYPT = CryptContext(schemes='bcrypt')
 
-if _dino in os.environ:
+if _dyno in os.environ:
     ENVIROMENT = _heroku
 else:
     ENVIROMENT = _local
