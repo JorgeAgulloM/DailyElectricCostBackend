@@ -22,14 +22,14 @@ if ENVIROMENT == _heroku:
 
     # Token configuration
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_DURATION = 5
+    ACCESS_TOKEN_DURATION = 24 * 60
     SECRET = os.environ.get('SECRET')
 
     # DB Configuration
     name_db: str = os.environ.get('DATABASE_NAME')
     user_db: str = os.environ.get('DATABASE_USER')
     pass_db: str = os.environ.get('DATABASE_PASS')
-    URL_DB = 'mongodb+srv://{}:{}@{}.mongodb.net/?retryWrites=true&w=majority'.format(user_db, pass_db, name_db)
+    URL_DB: str = os.environ.get('URL_MONGO_DB')# = 'mongodb+srv://{}:{}@{}.mongodb.net/?retryWrites=true&w=majority'.format(user_db, pass_db, name_db)
 
     # Credentias SMTP for Elastic Email
     ELASTIC_EMAIL_USERNAME: str = os.environ.get('ELASTIC_EMAIL_USERNAME')
