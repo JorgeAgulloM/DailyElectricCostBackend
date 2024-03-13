@@ -3,8 +3,6 @@
 import os
 from passlib.context import CryptContext
 
-from env import env_var as local
-
 _dino: str = 'DINO'
 _heroku: str = 'HEROKU'
 _local: str = 'LOCAL'
@@ -39,7 +37,8 @@ if _heroku == _local:
     MAILTRAP_EMAIL_USERNAME: str = os.environ.get('MAILTRAP_EMAIL_USERNAME')
     MAILTRAP_EMAIL_PASSWORD: str = os.environ.get('MAILTRAP_EMAIL_PASSWORD')
 else:
-
+    from env import env_var as local
+    
     # Token configuration
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_DURATION = 24 * 60
