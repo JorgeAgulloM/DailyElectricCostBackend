@@ -1,0 +1,1 @@
+from dynoscale.hooks.gunicorn import pre_request  # noqa # pylint: disable=unused-import
