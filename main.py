@@ -1,10 +1,14 @@
 from typing import Union
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.subscribers.routes import api_subscribers
 
 app = FastAPI()
+
+# Make public assets directory
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 app.include_router(api_subscribers.router)
 
