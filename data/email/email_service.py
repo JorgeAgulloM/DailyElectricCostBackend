@@ -3,7 +3,7 @@
 from smtplib import SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from enviroment_config import ELASTIC_EMAIL_SERVER, ELASTIC_EMAIL_PORT, ELASTIC_EMAIL_USERNAME, ELASTIC_EMAIL_PASSWORD
+from enviroment_config import URL_EMAIL_VERIFY, EMAIL_HTML_MESSAGE, ELASTIC_EMAIL_SERVER, ELASTIC_EMAIL_PORT, ELASTIC_EMAIL_USERNAME, ELASTIC_EMAIL_PASSWORD, OUTLOOK_EMAIL_SERVER, OUTLOOK_EMAIL_PORT, OUTLOOK_EMAIL_USERNAME, OUTLOOK_EMAIL_PASSWORD
 from secrets import token_urlsafe
 
 
@@ -15,9 +15,9 @@ def send(recipient: str) -> str:
     url = _create_url(code)
 
     # Configura el correo electrónico
-    sender = 'agullojorge@gmail.com'
-    message = f'Probando el envio de correos\n\n{url}'
-    subject = 'Por favor, verifique su Email.'
+    sender = 'softyorch@outlook.es'
+    message = EMAIL_HTML_MESSAGE(url)
+    subject = 'DailyElectricCost.web.app Por favor, verifique su email.'
 
     # Crea el mensaje
     msg = MIMEMultipart()
@@ -26,14 +26,14 @@ def send(recipient: str) -> str:
     msg['Subject'] = subject
 
     # Agrega el cuerpo del correo
-    msg.attach(MIMEText(message, 'plain'))
+    msg.attach(MIMEText(message, 'html'))
 
     # Inicia la conexión SMTP
-    smtp = SMTP(ELASTIC_EMAIL_SERVER, ELASTIC_EMAIL_PORT)
+    smtp = SMTP(OUTLOOK_EMAIL_SERVER, OUTLOOK_EMAIL_PORT)
     smtp.starttls()  # Habilita TLS si es necesario
 
     # Inicia sesión con tus credenciales
-    smtp.login(ELASTIC_EMAIL_USERNAME, ELASTIC_EMAIL_PASSWORD)
+    smtp.login(OUTLOOK_EMAIL_USERNAME, OUTLOOK_EMAIL_PASSWORD)
 
     # Envía el correo electrónico
     smtp.sendmail(sender, recipient, msg.as_string())
@@ -44,7 +44,7 @@ def send(recipient: str) -> str:
     return code
 
 def _create_url(code: str) -> str:
-    url = f"http://127.0.0.1:8000/login/verify_email/{code}\n\n"
+    url = f"{URL_EMAIL_VERIFY}/activated_subscriber/{code}\n\n"
     print(url) #Solo para facilitar al activación del usuario.
     return url
 
