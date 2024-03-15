@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
 
-from api.subscribers.models.subscripter import SubscriberApi
+from api.subscribers.models.subscripter import SubscriberApi, mapper_api_to_service
 from service.subscriptions.subscribe_service import get_subscribers, insert_subscriber, activate_subscriber
 
 router = APIRouter(
@@ -30,16 +30,16 @@ async def get_subscriber_list():
 
 
 """ Insert subscribers """
-@router.post('/{email}', status_code=status.HTTP_201_CREATED)
-async def insert_new_subscriber(email: str):
-    return insert_subscriber(email)
+@router.post('/', status_code=status.HTTP_201_CREATED)
+async def insert_new_subscriber(subscriber: SubscriberApi):
+    return insert_subscriber(mapper_api_to_service(subscriber))
 
 
 """ Activate Suscriptor """
 @router.put('/activated_subscriber/{code}', status_code=status.HTTP_200_OK)
 async def go_to_activate_subscriber(code: str):
     activate_subscriber(code)
-    return {'message': 'Activated'}
+    return {'message': 'Email subscription has beenn activated'}
 
 
 """ Cancel Subscription """
