@@ -17,6 +17,8 @@ origins = [
     'http://localhost:4200'
 ]
 
+public_endpoint = 'https://daily-electric-cost-bakend-8028a574d40e.herokuapp.com/activated_subscriber/'
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins, 
@@ -42,7 +44,12 @@ def read_ping():
 @app.middleware('http')
 async def check_cors(request: Request, call_next):
     print(request.headers)
+    if request.headers.get('referer').startswith('public_endpoint'):
+        response = await call_next(request)
+        return response
+    
     if request.headers.get('origin') not in origins:
         return JSONResponse(content={'error': 'Access denied'}, status_code=status.HTTP_403_FORBIDDEN)
+    
     response = await call_next(request)
     return response
