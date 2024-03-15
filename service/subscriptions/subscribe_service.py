@@ -11,8 +11,8 @@ def get_subscribers():
     return search_subscribers()
 
 
-def insert_subscriber(email: str):
-    new_subscriber = SubscriberSrv(email = email)
+def insert_subscriber(subscriber: SubscriberSrv):
+    new_subscriber = mapper_service_to_data(subscriber)
     
     # Search if email is suscripted
     email = new_subscriber.email
@@ -20,9 +20,9 @@ def insert_subscriber(email: str):
 
     if subscriptor_exist:
         if new_subscriber.activated:
-            return {'error': 'Email suscripted'}
+            return {'warning': 'Email has been subscribed'}
         else:
-            return {'error': 'Email suscribed but not activated'}
+            return {'warning': 'Email suscribed but not activated'}
     
     # Send and otain de activation code
     code = send_email_verification(email)
@@ -30,7 +30,7 @@ def insert_subscriber(email: str):
     # Insera al subscriptor en la DB
     new_subscriber.activation_code = code
     insert(mapper_service_to_data(new_subscriber))
-    return {'message': 'The email has been suscribed'}
+    return {'message': 'The email has been subscribed'}
     
 
 def activate_subscriber(code: str):
