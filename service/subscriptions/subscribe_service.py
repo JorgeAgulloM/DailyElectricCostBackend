@@ -20,9 +20,9 @@ def insert_subscriber(subscriber: SubscriberSrv):
 
     if subscriptor_exist:
         if new_subscriber.activated:
-            return {'warning': 'Email has been subscribed'}
+            return {'warning': 'Este email ya está suscrito!'} #message to front
         else:
-            return {'warning': 'Email suscribed but not activated'}
+            return {'warning': 'Email ya suscrito pero no activado. Por favor, revise su correo.'} #message to front
     
     # Send and otain de activation code
     code = send_email_verification(email)
@@ -30,7 +30,7 @@ def insert_subscriber(subscriber: SubscriberSrv):
     # Insera al subscriptor en la DB
     new_subscriber.activation_code = code
     insert(mapper_service_to_data(new_subscriber))
-    return {'message': 'The email has been subscribed'}
+    return {'message': 'Suscripción realizaca con éxito.\nRecivirá un email desde la dirección softYorch@outlook.es para verificar su email. Gracias!'} #message to front
     
 
 def activate_subscriber(code: str):
