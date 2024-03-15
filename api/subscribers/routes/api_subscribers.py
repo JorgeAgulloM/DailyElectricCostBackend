@@ -1,6 +1,6 @@
 ### Subscribers API ###
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import FastAPI, APIRouter, Depends, HTTPException, status
 from bson import ObjectId
 
 from api.subscribers.models.subscripter import SubscriberApi, mapper_api_to_service
@@ -11,6 +11,8 @@ router = APIRouter(
     tags=['subscribers'], 
     responses = {404: {'message': 'No encontrado'}}
 )
+
+publicApp = FastAPI()
 
 #####################################################################################################################
 ########################################### API CRUD Susbscripters ##################################################
@@ -36,7 +38,7 @@ async def insert_new_subscriber(subscriber: SubscriberApi):
 
 
 """ Activate Suscriptor """
-@router.put('/activated_subscriber/{code}', status_code=status.HTTP_200_OK)
+@publicApp.put('/activated_subscriber/{code}', status_code=status.HTTP_200_OK)
 async def go_to_activate_subscriber(code: str):
     activate_subscriber(code)
     return {'message': 'Email subscription has beenn activated'}
