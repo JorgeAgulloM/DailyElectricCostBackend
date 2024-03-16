@@ -16,13 +16,13 @@ def read_ping():
 
 
 """ Activate Suscriptor """
-@router.put('/activated_subscriber/{code}', status_code=status.HTTP_200_OK)
+@router.get('/activate/{code}', status_code=status.HTTP_200_OK)
 async def go_to_activate_subscriber(code: str):
     activate_subscriber(code)
     return {'message': 'Email subscription has beenn activated'}
 
 
 """ Cancel Subscription """
-@router.put('/cancel_subscriber/{code}', status_code=status.HTTP_200_OK)
+@router.get('/cancel/{code}', status_code=status.HTTP_200_OK)
 async def cancel_subscription(code: str):
     return
