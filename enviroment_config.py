@@ -36,7 +36,7 @@ if ENVIROMENT == _heroku:
     URL_DB: str = os.environ.get('URL_MONGO_DB')# = 'mongodb+srv://{}:{}@{}.mongodb.net/?retryWrites=true&w=majority'.format(user_db, pass_db, name_db)
     
     # Url for email verify
-    URL_EMAIL_VERIFY: str = 'https://daily-electric-cost-bakend-8028a574d40e.herokuapp.com' 
+    URL_EMAIL_VERIFY: str = 'https://dailyelectriccost.web.app/subscriptions' 
 
     # Credentias SMTP for Elastic Email
     ELASTIC_EMAIL_USERNAME: str = os.environ.get('ELASTIC_EMAIL_USERNAME')
@@ -58,7 +58,7 @@ else:
     URL_DB = local.URL_MONGO_DB
     
     # Url for email verify
-    URL_EMAIL_VERIFY: str = 'http://127.0.0.1:8000' 
+    URL_EMAIL_VERIFY: str = 'http://127.0.0.1:8000/subscriptions' 
 
     # Credentias SMTP for Elastic Email
     ELASTIC_EMAIL_USERNAME: str = local.ELASTIC_EMAIL_USERNAME

@@ -60,7 +60,7 @@ def _sender_builder(recipient, subject, message):
 
 
 def _create_url(code: str) -> str:
-    url = f"{URL_EMAIL_VERIFY}/public/subscribers/activate/{code}\n\n"
+    url = f"{URL_EMAIL_VERIFY}/{code}\n\n"
     return url
 
 
