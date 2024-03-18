@@ -2,7 +2,7 @@
 from datetime import datetime
 from bson import ObjectId
 
-from data.db.subscribes.subscribe_repository import search_subscribers, search_subscriber, insert, activate
+from data.db.subscribes.subscribe_repository import search_subscribers, search_subscriber, insert, activate, cancel
 from service.subscriptions.models.subscripter import SubscriberSrv, mapper_service_to_data
 from data.email.email_repository import send_email_verification 
 
@@ -32,18 +32,74 @@ def insert_subscriber(subscriber: SubscriberSrv):
     insert(mapper_service_to_data(new_subscriber))
     return {'message': 'Suscripción realizaca con éxito.\nRecivirá un email desde la dirección softYorch@outlook.es para verificar su email. Gracias!'} #message to front
     
+    
+def get_email(code: str):
+    try:
+        subscriber = search_subscriber('activation_code', code)
+        if subscriber is None:
+            return {
+                'error': 'Ooops!! El correo a suscribir no existe.\n Prueba a realizar la subscripción de nuevo!',
+                'error_message': 'Error: None type'  
+            }
+        return subscriber['email']
+    except Exception as e:
+        return {
+            'error': 'Ooops!! Error al realizar la activación a la subscripción!',
+            'error_message': f'Error: ${e}'    
+        }
+    
 
 def activate_subscriber(code: str):
     try:
         subscriber = search_subscriber('activation_code', code)
+        if subscriber is None:
+            return {
+                'error': 'Ooops!! El correo a suscribir no existe.\n Prueba a realizar la subscripción de nuevo!',
+                'error_message': 'Error: None type'  
+            }
+        
+        subscriber['date_activated'] = str(datetime.now())
+        subscriber['activated'] = True
+        subscriber['cancelated'] = False
+        filter_id = {'_id': ObjectId(subscriber['_id'])}
     except Exception as e:
-        return {'error': f'When getting user. Error: {e}'}
-    
-    subscriber['date_activated'] = str(datetime.now())
-    subscriber['activated'] = True
-    filter_id = {'_id': ObjectId(subscriber['_id'])}
+        return {
+            'error': 'Ooops!! Error al realizar la activación a la subscripción!',
+            'error_message': f'Error: ${e}'    
+        }
     
     try:
         return activate(filter_id, subscriber)
     except Exception as e:
-        return {'error': f'When activating user. Error: {e}'}
+        return {
+            'error': 'Ooops!! Error al realizar la activación a la subscripción!',
+            'error_message': f'Error: ${e}'  
+        }
+
+def cancel_subscriber(code: str):
+    try:
+        subscriber = search_subscriber('activation_code', code)
+        if subscriber is None:
+            return {
+                'error': 'Ooops!! El correo a cancelar no existe.\n Prueba de nuevo, si el error persiste, por favor, contacta con nosotros!',
+                'error_message': 'Error: None type'  
+            }
+            
+        subscriber['date_cancelated'] = str(datetime.now())
+        subscriber['activated'] = False
+        subscriber['cancelated'] = True
+        
+        filter_id = {'_id': ObjectId(subscriber['_id'])}
+    except Exception as e:
+        return {
+            'error': 'Ooops!! Error al realizar la cancelación de tu subscripción!',
+            'error_message': f'Error: ${e}'    
+        }
+
+    try:
+        return cancel(filter_id, subscriber)
+    except Exception as e:
+        return {
+            'error': 'Ooops!! Error al realizar la cancelación de tu subscripción!',
+            'error_message': f'Error: ${e}'  
+        }
