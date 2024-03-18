@@ -14,11 +14,17 @@ def search_subscribers():
         return subscripters
     
     except Exception as e:
-        return {'error': f'When getting subscripters! Error: {e}'}
+        return {
+            'error': f'When getting subscripters! Error: {e}',
+            'error_message': f'Error: ${e}'  
+        }
     
 
 def search_subscriber(field: str, key: str):
-    return db_find_one(field, key)
+    try:
+        return db_find_one(field, key)
+    except Exception as e:
+        return {'error': 'Ooops!! Error al realizar la activación a la subscripción!'}
     
     
 def insert(subscriber: Subscriber):
@@ -31,6 +37,22 @@ def insert(subscriber: Subscriber):
 
 def activate(filter: Mapping[str, Any], replacement: Mapping[str, Any]):
     try:
-        return db_find_one_and_replace(filter, replacement)
+        db_find_one_and_replace(filter, replacement)
+        return {'message': 'Tu subscribción ha sido activada correctamente!'}
     except Exception as e:
-        return {'error': f'When activating subscripter! Error: {e}'}      
+        return {
+            'error': 'Ooops!! Error al realizar la activación a la subscripción!',
+            'error_message': f'Error: ${e}'      
+        }      
+
+def cancel(filter: Mapping[str, Any], replacement: Mapping[str, Any]):
+    try:
+        response = db_find_one_and_replace(filter, replacement)
+        print(f'Response: {response}')
+        return {'message': 'Tu subscribción ha sido cancelada correctamente.'}
+    except Exception as e:
+        return {
+            'error': 'Ooops!! Error al realizar la cancelación de tu subscripción!',
+            'error_message': f'Error: ${e}'      
+        } 
+        
