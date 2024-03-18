@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from api.subscribers.routes import api_subscribers, api_subscribers_public
+from api.subscribers.routes import api_subscribers
 from api.contact.routes import api_contact
 
 app = FastAPI()
@@ -31,7 +31,6 @@ app.add_middleware(
 
 app.include_router(api_subscribers.router)
 app.include_router(api_contact.router)
-app.include_router(api_subscribers_public.router)
 
 
 @app.get('/')
@@ -46,12 +45,6 @@ def read_ping():
 
 @app.middleware('http')
 async def check_cors(request: Request, call_next):
-    
-    url = str(request.url)
-    is_public = any(x in url for x in publics)
-    if is_public:
-        response = await call_next(request)
-        return response
     
     if request.headers.get('origin') not in origins:
         return JSONResponse(content={'error': 'Access denied'}, status_code=status.HTTP_403_FORBIDDEN)
