@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from enviroment_config import URL_EMAIL_VERIFY, ELASTIC_EMAIL_SERVER, ELASTIC_EMAIL_PORT, ELASTIC_EMAIL_USERNAME, ELASTIC_EMAIL_PASSWORD, OUTLOOK_EMAIL_SERVER, OUTLOOK_EMAIL_PORT, OUTLOOK_EMAIL_USERNAME, OUTLOOK_EMAIL_PASSWORD
 from secrets import token_urlsafe
-from data.email.models.contact import ContactDB
+from domain.email.models.contact import ContactDB
 
 
 def send_contact(contact: ContactDB):

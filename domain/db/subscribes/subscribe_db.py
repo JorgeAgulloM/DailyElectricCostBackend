@@ -2,7 +2,7 @@
 
 from typing import Any, Mapping
 from pymongo import MongoClient
-from data.db.connection.atlas_db_connection import db_client
+from domain.db.connection.atlas_db_connection import db_client
 
 def _subscripters() -> MongoClient:
     return db_client.subscripters
