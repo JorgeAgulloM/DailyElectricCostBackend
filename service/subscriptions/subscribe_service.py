@@ -2,9 +2,9 @@
 from datetime import datetime
 from bson import ObjectId
 
-from data.db.subscribes.subscribe_repository import search_subscribers, search_subscriber, insert, activate, cancel
+from domain.db.subscribes.subscribe_repository import search_subscribers, search_subscriber, insert, activate, cancel
 from service.subscriptions.models.subscripter import SubscriberSrv, mapper_service_to_data
-from data.email.email_repository import send_email_verification 
+from domain.email.email_repository import send_email_verification 
 
 
 def get_subscribers():
