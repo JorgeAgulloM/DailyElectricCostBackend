@@ -1,7 +1,7 @@
 ### Model Data For Contact to Developer ###
 
 from pydantic import BaseModel
-from data.email.models.contact import ContactDB
+from domain.email.models.contact import ContactDB
 
 class ContactSrv(BaseModel):
     email: str

@@ -2,7 +2,7 @@
 
 from typing import Optional
 from pydantic import BaseModel
-from data.db.models.subscriptor import Subscriber
+from domain.db.models.subscriptor import Subscriber
 
 class SubscriberSrv(BaseModel):
     id: str = Optional[str] | None
